@@ -34,7 +34,11 @@ class LessonViewController: UIViewController, UITextFieldDelegate, UIImagePicker
             nameTextField.text = lesson.name
             photoImageView.image = lesson.photo
             
-            lessonWebView.load(URLRequest(url: URL(string: lesson.url)!))
+            let formatterDate = DateFormatter()
+            formatterDate.dateFormat = "?Version=HH_mm_ss_d__MMM_y"
+            let freshUrl = lesson.url + formatterDate.string(from: Date())
+
+            lessonWebView.load(URLRequest(url: URL(string: freshUrl)!))
             lessonWebView.allowsBackForwardNavigationGestures = true
         }
     }

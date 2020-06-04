@@ -162,23 +162,33 @@ class LessonTableViewController: UITableViewController {
         let photo_bbc = UIImage(named: "bareboatcruising")
         let photo_btb = UIImage(named: "basictobareboat")
 
-        guard let lesson1 = Lesson(name: "All", photo: photo_all, url: "https://windworkssailing.com/wp-content/uploads/mobile/all.html") else {
+        guard let lesson1 = Lesson(name: "All",
+                                   photo: photo_all,
+                                   url: "https://www.windworkssailing.com/wp-content/uploads/mobile/all.html") else {
             fatalError("Unable to instantiate lesson1")
         }
 
-        guard let lesson2 = Lesson(name: "Basic Keelboat", photo: photo_bk, url: "https://windworkssailing.com/wp-content/uploads/mobile/bk.html") else {
+        guard let lesson2 = Lesson(name: "Basic Keelboat",
+                                   photo: photo_bk,
+                                   url: "https://www.windworkssailing.com/wp-content/uploads/mobile/bk.html") else {
             fatalError("Unable to instantiate lesson2")
         }
 
-        guard let lesson3 = Lesson(name: "Basic Crusing", photo: photo_bc, url: "https://windworkssailing.com/wp-content/uploads/mobile/bc.html") else {
+        guard let lesson3 = Lesson(name: "Basic Crusing",
+                                   photo: photo_bc,
+                                   url: "https://windworkssailing.com/wp-content/uploads/mobile/bc.html") else {
             fatalError("Unable to instantiate lesson3")
         }
         
-        guard let lesson4 = Lesson(name: "Bareboat Cruising", photo: photo_bbc, url: "https://windworkssailing.com/wp-content/uploads/mobile/bbc.html") else {
+        guard let lesson4 = Lesson(name: "Bareboat Cruising",
+                                   photo: photo_bbc,
+                                   url: "https://www.windworkssailing.com/wp-content/uploads/mobile/bbc.html") else {
             fatalError("Unable to instantiate lesson4")
         }
         
-        guard let lesson5 = Lesson(name: "Basic To Bareboat", photo: photo_btb, url: "https://windworkssailing.com/wp-content/uploads/mobile/btb.html") else {
+        guard let lesson5 = Lesson(name: "Basic To Bareboat",
+                                   photo: photo_btb,
+                                   url: "https://www.windworkssailing.com/wp-content/uploads/mobile/btb.html") else {
             fatalError("Unable to instantiate lesson5")
         }
 
