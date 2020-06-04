@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import WebKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, WKNavigationDelegate {
 
     var window: UIWindow?
 

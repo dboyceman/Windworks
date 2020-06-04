@@ -9,13 +9,13 @@
 import UIKit
 import os.log
 
-
 class Lesson: NSObject, NSCoding {
     
     //MARK: Properties
     
     var name: String
     var photo: UIImage?
+    var url: String
     
     //MARK: Archiving Paths
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -26,11 +26,12 @@ class Lesson: NSObject, NSCoding {
     struct PropertyKey {
         static let name = "name"
         static let photo = "photo"
+        static let url = "url"
     }
     
     //MARK: Initialization
     
-    init?(name: String, photo: UIImage?) {
+    init?(name: String, photo: UIImage?, url: String) {
         
         // The name must not be empty
         guard !name.isEmpty else {
@@ -41,10 +42,21 @@ class Lesson: NSObject, NSCoding {
         if name.isEmpty  {
             return nil
         }
-        
+
+        // The url must not be empty
+        guard !url.isEmpty else {
+            return nil
+        }
+
+        // Initialization should fail if there is no url
+        if url.isEmpty  {
+            return nil
+        }
+
         // Initialize stored properties.
         self.name = name
         self.photo = photo
+        self.url = url
     }
     
     //MARK: NSCoding
@@ -52,7 +64,7 @@ class Lesson: NSObject, NSCoding {
     func encode(with aCoder: NSCoder) {
         aCoder.encode(name, forKey: PropertyKey.name)
         aCoder.encode(photo, forKey: PropertyKey.photo)
-    }
+        aCoder.encode(url, forKey: PropertyKey.url)    }
     
     required convenience init?(coder aDecoder: NSCoder) {
         
@@ -62,11 +74,17 @@ class Lesson: NSObject, NSCoding {
             return nil
         }
         
-        // Because photo is an optional property of Lesson, just use conditional cast.
+        // The url is required. If we cannot decode a url string, the initializer should fail.
+        guard let url = aDecoder.decodeObject(forKey: PropertyKey.url) as? String else {
+            os_log("Unable to decode the url for a Lesson object.", log: OSLog.default, type: .debug)
+            return nil
+        }
+        
+        // Because photo is optional property of Lesson, just use conditional cast.
         let photo = aDecoder.decodeObject(forKey: PropertyKey.photo) as? UIImage
         
         // Must call designated initializer.
-        self.init(name: name, photo: photo)
+        self.init(name: name, photo: photo, url: url)
         
     }
 }

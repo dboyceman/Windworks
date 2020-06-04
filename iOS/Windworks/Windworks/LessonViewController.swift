@@ -15,20 +15,14 @@ class LessonViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     //MARK: Properties
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var lessonWebView: WKWebView!
     
-    var webView: WKWebView!
     /*
          This value is either passed by `LessonTableViewController` in `prepare(for:sender:)`
          or constructed as part of adding a new lesson.
      */
     var lesson: Lesson?
-    
-    override func loadView() {
-        webView = WKWebView()
-        webView.navigationDelegate = self
-        view = webView
-    }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,11 +33,10 @@ class LessonViewController: UIViewController, UITextFieldDelegate, UIImagePicker
             navigationItem.title = lesson.name
             nameTextField.text = lesson.name
             photoImageView.image = lesson.photo
+            
+            lessonWebView.load(URLRequest(url: URL(string: lesson.url)!))
+            lessonWebView.allowsBackForwardNavigationGestures = true
         }
-        
-        let url = URL(string: "https:www.hackingwithswift.com")!
-        webView.load(URLRequest(url: url))
-        webView.allowsBackForwardNavigationGestures = true
     }
     
     //MARK: UITextFieldDelegate
@@ -61,9 +54,9 @@ class LessonViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-// Local variable inserted by Swift 4.2 migrator.
-let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
 
+        // Local variable inserted by Swift 4.2 migrator.
+        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         
         // The info dictionary may contain multiple representations of the image. You want to use the original.
         guard let selectedImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage else {
@@ -103,7 +96,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         let photo = photoImageView.image
         
         // Set the lesson to be passed to LessonTableViewController after the unwind segue.
-        lesson = Lesson(name: name, photo: photo)
+        lesson = Lesson(name: name, photo: photo, url: "default")
     }
     
     //MARK: Actions
