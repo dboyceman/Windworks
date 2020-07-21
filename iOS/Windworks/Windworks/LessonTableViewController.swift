@@ -18,6 +18,9 @@ class LessonTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30.0)]
+        UITabBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .normal)
+
         // Load the sample data.
         loadSampleLessons()
     }
@@ -51,6 +54,13 @@ class LessonTableViewController: UITableViewController {
         let lesson = lessons[indexPath.row]
         
         cell.nameLabel.text = lesson.name
+        
+        cell.captionLabel.numberOfLines = 0
+        cell.captionLabel.lineBreakMode = .byWordWrapping
+        cell.captionLabel.font = cell.captionLabel.font.withSize(14)
+        cell.captionLabel.textColor = .cyan
+        cell.captionLabel.text = lesson.caption
+        
         cell.photoImageView.image = lesson.photo
         
         return cell
@@ -135,11 +145,13 @@ class LessonTableViewController: UITableViewController {
         if let sourceViewController = sender.source as? LessonViewController, let lesson = sourceViewController.lesson {
             
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                
                 // Update an existing lesson.
                 lessons[selectedIndexPath.row] = lesson
                 tableView.reloadRows(at: [selectedIndexPath], with: .none)
             }
             else {
+                
                 // Add a new lesson.
                 let newIndexPath = IndexPath(row: lessons.count, section: 0)
                 
@@ -161,38 +173,75 @@ class LessonTableViewController: UITableViewController {
         let photo_bc = UIImage(named: "basiccruising")
         let photo_bbc = UIImage(named: "bareboatcruising")
         let photo_btb = UIImage(named: "basictobareboat")
+        let photo_windshare = UIImage(named: "windshare")
+        let photo_racing = UIImage(named: "racing")
+        let photo_liveaboard = UIImage(named: "liveaboard")
 
-        guard let lesson1 = Lesson(name: "All",
-                                   photo: photo_all,
-                                   url: "https://www.windworkssailing.com/wp-content/uploads/mobile/all.html") else {
-            fatalError("Unable to instantiate lesson1")
-        }
+        guard let lessonAll = Lesson(
+            name: "All Lessons",
+            caption: "Dive in and view all the Windworks lessons to find the best class for you",
+            photo: photo_all,
+            url: "https://fareharbor.com/embeds/book/windworkssailing/?selected-items=36436,15027,214078,15033,218171,15035,218180,15036,15038,15041,15059,15075,15043,218184,40395,218302,25037,218264,43781,15077") else {
+                fatalError("Unable to instantiate lessonAll")
+            }
 
-        guard let lesson2 = Lesson(name: "Basic Keelboat",
-                                   photo: photo_bk,
-                                   url: "https://www.windworkssailing.com/wp-content/uploads/mobile/bk.html") else {
-            fatalError("Unable to instantiate lesson2")
-        }
+        guard let lessonSingleDayCharter = Lesson(
+            name: "US Sailing Beginner Sailor",
+            caption: "Want to charter a boat for the day?  View all lessons required for sailors to charter a day trip",
+            photo: photo_bk,
+            url: "https://fareharbor.com/embeds/book/windworkssailing/items/?selected-items=36436,15027,214078,15033,218171,15035,218180&flow=19676&full-items=yes") else {
+                fatalError("Unable to instantiate lessonSingleDayCharter")
+            }
 
-        guard let lesson3 = Lesson(name: "Basic Crusing",
-                                   photo: photo_bc,
-                                   url: "https://windworkssailing.com/wp-content/uploads/mobile/bc.html") else {
-            fatalError("Unable to instantiate lesson3")
-        }
+        guard let lessonMultiDayCharter = Lesson(
+            name: "US Sailing Advanced Sailor",
+            caption: "Dreaming of a trip to the San Juan Islands?  View all lessons required for sailors to charter a multi-day trip",
+            photo: photo_bc,
+            url: "https://fareharbor.com/embeds/book/windworkssailing/?selected-items=15036,15038,15041,15043,218184,25037,218264&full-items=yes&flow=19676") else {
+                fatalError("Unable to instantiate lessonMultiDayCharter")
+            }
+
+        guard let lessonLiveAboard = Lesson(
+            name: "US Sailing Live Aboard",
+            caption: "Lessons recommended for live aboard sailors",
+            photo: photo_liveaboard,
+            url: "https://fareharbor.com/embeds/book/windworkssailing/?selected-items=72013&full-items=yes&flow=19676") else {
+                fatalError("Unable to instantiate lessonLiveAboard")
+            }
         
-        guard let lesson4 = Lesson(name: "Bareboat Cruising",
-                                   photo: photo_bbc,
-                                   url: "https://www.windworkssailing.com/wp-content/uploads/mobile/bbc.html") else {
-            fatalError("Unable to instantiate lesson4")
-        }
+       guard let lessonClinics = Lesson(
+            name: "Clinics, Events & Booking",
+            caption: "Want to learn something new or touch up on a skill?  Visit our clinics page for upcoming classes",
+            photo: photo_bbc,
+            url: "https://fareharbor.com/embeds/book/windworkssailing/?selected-items=218301,218303,218264,218180,218302,218171,214078,148642,18509,15079,15100,15109,15081,15084,15086,15087,15090,15091,15093,15096,15718,18054,20151,28832,29299,15114,30389,40395,40662,43659,45759,45885,46594,35660,52238,55390,56530,15079,72013,15113,142176&full-items=yes&flow=19676") else {
+               fatalError("Unable to instantiate lessonClinics")
+            }
+       
+       guard let lessonRaces = Lesson(
+            name: "Races",
+            caption: "Race time - see all the race events",
+            photo: photo_racing,
+            url: "https://fareharbor.com/embeds/book/windworkssailing/?selected-items=15109,29299,108194,218301&full-items=yes&flow=19676") else {
+               fatalError("Unable to instantiate lessonRaces")
+            }
         
-        guard let lesson5 = Lesson(name: "Basic To Bareboat",
-                                   photo: photo_btb,
-                                   url: "https://www.windworkssailing.com/wp-content/uploads/mobile/btb.html") else {
-            fatalError("Unable to instantiate lesson5")
-        }
-
-        lessons += [lesson1, lesson2, lesson3, lesson4, lesson5]
+        guard let lessonWindshare = Lesson(
+            name: "Windshare",
+            caption: "Want to join in on an existing charter?  Check out all the charters available for joining",
+            photo: photo_windshare,
+            url: "https://fareharbor.com/embeds/book/windworkssailing-members/items/calendar/") else {
+                fatalError("Unable to instantiate lessonWindshare")
+            }
+        
+        guard let lessonCharterRentals = Lesson(
+            name: "Charter Rentals",
+            caption: "Ready to schedule your charter?  Check out the fleet availability and schedule your next adventure",
+            photo: photo_btb,
+            url: "https://www.planyo.com/booking.php?calendar=21980") else {
+                fatalError("Unable to instantiate lessonCharterRentals")
+            }
+        
+        lessons += [lessonAll, lessonSingleDayCharter, lessonMultiDayCharter, lessonLiveAboard, lessonClinics, lessonRaces, lessonWindshare, lessonCharterRentals]
     }
     
     private func saveLessons() {

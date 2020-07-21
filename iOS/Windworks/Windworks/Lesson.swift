@@ -14,6 +14,7 @@ class Lesson: NSObject, NSCoding {
     //MARK: Properties
     
     var name: String
+    var caption: String
     var photo: UIImage?
     var url: String
     
@@ -25,13 +26,14 @@ class Lesson: NSObject, NSCoding {
     
     struct PropertyKey {
         static let name = "name"
+        static let caption = "caption"
         static let photo = "photo"
         static let url = "url"
     }
     
     //MARK: Initialization
     
-    init?(name: String, photo: UIImage?, url: String) {
+    init?(name: String, caption: String, photo: UIImage?, url: String) {
         
         // The name must not be empty
         guard !name.isEmpty else {
@@ -55,6 +57,7 @@ class Lesson: NSObject, NSCoding {
 
         // Initialize stored properties.
         self.name = name
+        self.caption = caption
         self.photo = photo
         self.url = url
     }
@@ -63,6 +66,7 @@ class Lesson: NSObject, NSCoding {
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(name, forKey: PropertyKey.name)
+        aCoder.encode(caption, forKey: PropertyKey.caption)
         aCoder.encode(photo, forKey: PropertyKey.photo)
         aCoder.encode(url, forKey: PropertyKey.url)    }
     
@@ -80,11 +84,14 @@ class Lesson: NSObject, NSCoding {
             return nil
         }
         
+        // Because caption is optional property of Lesson, just use a conditional cast.
+        let caption = aDecoder.decodeObject(forKey: PropertyKey.caption) as! String
+
         // Because photo is optional property of Lesson, just use conditional cast.
         let photo = aDecoder.decodeObject(forKey: PropertyKey.photo) as? UIImage
         
         // Must call designated initializer.
-        self.init(name: name, photo: photo, url: url)
+        self.init(name: name, caption: caption, photo: photo, url: url)
         
     }
 }

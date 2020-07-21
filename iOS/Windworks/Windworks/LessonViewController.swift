@@ -32,7 +32,7 @@ class LessonViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         if let lesson = lesson {
             navigationItem.title = lesson.name
             nameTextField.text = lesson.name
-            photoImageView.image = lesson.photo
+            //photoImageView.image = lesson.photo
             
             let formatterDate = DateFormatter()
             formatterDate.dateFormat = "?Version=HH_mm_ss_d__MMM_y"
@@ -41,6 +41,9 @@ class LessonViewController: UIViewController, UITextFieldDelegate, UIImagePicker
             lessonWebView.load(URLRequest(url: URL(string: freshUrl)!))
             lessonWebView.allowsBackForwardNavigationGestures = true
         }
+        
+        let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30.0)]
+        UITabBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .normal)
     }
     
     //MARK: UITextFieldDelegate
@@ -97,10 +100,11 @@ class LessonViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         super.prepare(for: segue, sender: sender)
         
         let name = nameTextField.text ?? ""
+        let caption = ""
         let photo = photoImageView.image
         
         // Set the lesson to be passed to LessonTableViewController after the unwind segue.
-        lesson = Lesson(name: name, photo: photo, url: "default")
+        lesson = Lesson(name: name, caption: caption, photo: photo, url: "default")
     }
     
     //MARK: Actions

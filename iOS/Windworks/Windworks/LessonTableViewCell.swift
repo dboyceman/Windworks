@@ -12,6 +12,7 @@ class LessonTableViewCell: UITableViewCell {
     
     //MARK: Properties
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var captionLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
 
     override func awakeFromNib() {
