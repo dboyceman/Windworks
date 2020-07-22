@@ -13,7 +13,7 @@ class AboutViewController: UIViewController {
 
     @IBOutlet weak var aboutWebView: WKWebView!
     
-    let windworksURL = "https://www.windworkssailing.com/contact/"
+    let windworksURL = "https://www.windworkssailing.com/contact-mobile/"
     
     override func viewDidLoad() {
         super.viewDidLoad()
